@@ -1,0 +1,101 @@
+{{- $tendbSize := .Values.tendb.size | int }}
+{{- $tspiderSize := .Values.tspider.size | int }}
+{{- $clusterName := .Values.tendbClusterName }}
+{{- $userOperator := .Values.userOperator.user }}
+{{- $userOperatorPass := .Values.userOperator.password }}
+{{- $userOperatorHost := .Values.userOperator.host }}
+{{- $userAdmin := .Values.userAdmin.user }}
+{{- $userAdminPass := .Values.userAdmin.password }}
+{{- $userRootPass := .Values.userRoot.password }}
+version: '3'
+services:
+  {{- range until $tendbSize }}
+  {{ $clusterName }}-tendb-spt{{ . }}:
+  {{- $mysqlPort := ($.Values.tendb.portStart | add . ) }}
+    image: {{ $.Values.tendb.image }}
+    container_name: {{ $clusterName }}-tendb-spt{{ . }}
+    networks:
+      - mynet
+    ports:
+      - "{{ $mysqlPort }}:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+      - --innodb_buffer_pool_size={{ $.Values.tendb.innodbBufferPoolSize }}
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD={{ $userRootPass }}
+      - MYSQL_ADMIN_USER={{ $userAdmin }}
+      - MYSQL_ADMIN_PASS={{ $userAdminPass }}
+      - MYSQL_OPERATOR_USER={{ $userOperator }}
+      - MYSQL_OPERATOR_PASS={{ $userOperatorPass }}
+      - MYSQL_OPERATOR_HOST={{ $userOperatorHost }}
+    volumes:
+      - "./config/my.tendb.cnf:/etc/my.cnf:ro"
+      - "{{ $.Values.tendb.dataDir }}/{{ $mysqlPort }}:/data1/mysqldata/3306"
+    restart: on-failure:3
+  {{- end }}
+  {{- range until $tspiderSize }}
+  {{ $clusterName }}-tspider-{{ . }}:
+  {{- $mysqlPort := ($.Values.tspider.portStart | add . ) }}
+    image: {{ $.Values.tspider.image }}
+    container_name: {{ $clusterName }}-tspider-{{ . }}
+    networks:
+      - mynet
+    ports:
+      - "{{ $mysqlPort }}:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD={{ $userRootPass }}
+      - MYSQL_ADMIN_USER={{ $userAdmin }}
+      - MYSQL_ADMIN_PASS={{ $userAdminPass }}
+      - MYSQL_OPERATOR_USER={{ $userOperator }}
+      - MYSQL_OPERATOR_PASS={{ $userOperatorPass }}
+      - MYSQL_OPERATOR_HOST={{ $userOperatorHost }}
+    volumes:
+      - "./config/my.tspider.cnf:/etc/my.cnf:ro"
+      - "{{ $.Values.tspider.dataDir }}/{{ $mysqlPort }}:/data1/mysqldata/3306"
+    restart: on-failure:3
+  {{- end }}
+  {{ $clusterName }}-tdbctl-0:
+    image: {{ $.Values.tdbctl.image }}
+    container_name: {{ $clusterName }}-tdbctl-0
+    networks:
+      - mynet
+    depends_on:
+  {{- range until $tendbSize }}
+      - {{ $clusterName }}-tendb-spt{{ . }}
+  {{- end }}
+  {{- range until $tspiderSize }}
+      - {{ $clusterName }}-tspider-{{ . }}
+  {{- end }}
+    ports:
+      - "{{ $.Values.tdbctl.port }}:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+    #env_file:
+    #  - tendbcluster-vars.env
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD={{ $userRootPass }}
+      - MYSQL_ADMIN_USER={{ $userAdmin }}
+      - MYSQL_ADMIN_PASS={{ $userAdminPass }}
+      - MYSQL_OPERATOR_USER={{ $userOperator }}
+      - MYSQL_OPERATOR_PASS={{ $userOperatorPass }}
+      - MYSQL_OPERATOR_HOST={{ $userOperatorHost }}
+    volumes:
+      - "./config/my.tdbctl.cnf:/etc/my.cnf:ro"
+      - "{{ $.Values.tdbctl.dataDir }}/{{ $.Values.tdbctl.port }}:/data1/mysqldata/3306"
+      - "./tdbctl-routing-flush.sql:/docker-entrypoint-initdb.d/tdbctl-routing-flush.sql:ro"
+    restart: on-failure:3
+
+networks:
+  mynet:
+    driver: bridge

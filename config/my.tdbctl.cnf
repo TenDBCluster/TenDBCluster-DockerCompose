@@ -1,0 +1,24 @@
+[client]
+port=3306
+socket=/data1/mysqldata/3306/mysql.sock
+
+[mysqld]
+datadir=/data1/mysqldata/3306/data
+socket=/data1/mysqldata/3306/mysql.sock
+port=3306
+server_id=10002
+gtid_mode=ON
+enforce_gtid_consistency=ON
+master_info_repository=TABLE
+relay_log_info_repository=TABLE
+# log_bin=mysql-bin
+log_bin=/data1/mysqldata/3306/binlog/mysql-bin
+binlog_format=row
+expire_logs_days=3
+binlog_checksum=NONE
+log_slave_updates=ON
+tmpdir=/data1/mysqldata/3306/tmp
+
+[mysql]
+port=3306
+socket=/data1/mysqldata/3306/mysql.sock

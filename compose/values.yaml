@@ -1,0 +1,33 @@
+# Default values for TenDBCluster.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tendbClusterName: test
+
+userAdmin:
+  user: ADMIN
+  password: ADMINPASS
+userOperator:
+  user: tendbcluster
+  password: tendbclusterpass
+  host: "%"
+userRoot:
+    password: tendbclusterpass
+
+tendb:
+  image: tendbcluster/tendb:3.2-min-v0.1
+  size: 4
+  portStart: 20000
+  dataDir: /data/mysqldata
+  innodbBufferPoolSize: 256M
+
+tspider:
+  image: tendbcluster/tspider:3.5-min-v0.1
+  size: 2
+  portStart: 25000
+  dataDir: /data/mysqldata
+
+tdbctl:
+  image: tendbcluster/tdbctl:1.4-min-v0.3
+  port: 26000
+  dataDir: /data/mysqldata

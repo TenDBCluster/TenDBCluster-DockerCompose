@@ -1,0 +1,185 @@
+---
+# Source: tendbcluster-docker-compose/templates/docker-compose.yml
+
+version: '3'
+services:
+  test-tendb-spt0:
+    image: tendbcluster/tendb:3.2-min-v0.1
+    container_name: test-tendb-spt0
+    networks:
+      - mynet
+    ports:
+      - "20000:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+      - --innodb_buffer_pool_size=256M
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tendb.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/20000:/data1/mysqldata/3306"
+    restart: on-failure:3
+  test-tendb-spt1:
+    image: tendbcluster/tendb:3.2-min-v0.1
+    container_name: test-tendb-spt1
+    networks:
+      - mynet
+    ports:
+      - "20001:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+      - --innodb_buffer_pool_size=256M
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tendb.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/20001:/data1/mysqldata/3306"
+    restart: on-failure:3
+  test-tendb-spt2:
+    image: tendbcluster/tendb:3.2-min-v0.1
+    container_name: test-tendb-spt2
+    networks:
+      - mynet
+    ports:
+      - "20002:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+      - --innodb_buffer_pool_size=256M
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tendb.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/20002:/data1/mysqldata/3306"
+    restart: on-failure:3
+  test-tendb-spt3:
+    image: tendbcluster/tendb:3.2-min-v0.1
+    container_name: test-tendb-spt3
+    networks:
+      - mynet
+    ports:
+      - "20003:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+      - --innodb_buffer_pool_size=256M
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tendb.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/20003:/data1/mysqldata/3306"
+    restart: on-failure:3
+  test-tspider-0:
+    image: tendbcluster/tspider:3.5-min-v0.1
+    container_name: test-tspider-0
+    networks:
+      - mynet
+    ports:
+      - "25000:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tspider.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/25000:/data1/mysqldata/3306"
+    restart: on-failure:3
+  test-tspider-1:
+    image: tendbcluster/tspider:3.5-min-v0.1
+    container_name: test-tspider-1
+    networks:
+      - mynet
+    ports:
+      - "25001:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tspider.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/25001:/data1/mysqldata/3306"
+    restart: on-failure:3
+  test-tdbctl-0:
+    image: tendbcluster/tdbctl:1.4-min-v0.3
+    container_name: test-tdbctl-0
+    networks:
+      - mynet
+    depends_on:
+      - test-tendb-spt0
+      - test-tendb-spt1
+      - test-tendb-spt2
+      - test-tendb-spt3
+      - test-tspider-0
+      - test-tspider-1
+    ports:
+      - "26000:3306"
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --user=mysql
+    #env_file:
+    #  - tendbcluster-vars.env
+    environment:
+      - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
+      - MYSQLDATADIR=/data1/mysqldata/3306
+      - MYSQL_ROOT_PASSWORD=tendbclusterpass
+      - MYSQL_ADMIN_USER=ADMIN
+      - MYSQL_ADMIN_PASS=ADMINPASS
+      - MYSQL_OPERATOR_USER=tendbcluster
+      - MYSQL_OPERATOR_PASS=tendbclusterpass
+      - MYSQL_OPERATOR_HOST=%
+    volumes:
+      - "./config/my.tdbctl.cnf:/etc/my.cnf:ro"
+      - "/data/mysqldata/26000:/data1/mysqldata/3306"
+      - "./tdbctl-routing-flush.sql:/docker-entrypoint-initdb.d/tdbctl-routing-flush.sql:ro"
+    restart: on-failure:3
+
+networks:
+  mynet:
+    driver: bridge
+
