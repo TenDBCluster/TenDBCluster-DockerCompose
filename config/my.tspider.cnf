@@ -33,8 +33,6 @@ spider_get_sts_or_crd=1
 spider_index_hint_pushdown=1
 tmpdir=/data1/mysqldata/3306/tmp
 sql_mode=''
-log_bin=/data1/mysqldata/3306/binlog/mysql-bin
-binlog_format=row
 
 spider_auto_increment_mode_switch=1
 spider_auto_increment_mode_value=1
