@@ -18,6 +18,7 @@ innodb_log_group_home_dir=/data1/mysqldata/3306/innodb/log
 slow_query_log_file=/data1/mysqldata/3306/slow-query.log
 tmpdir=/data1/mysqldata/3306/tmp
 relay_log=/data1/mysqldata/3306/relay-log/relay-log.bin
+sql_mode=''
 
 port=3306
 server_id=1000
