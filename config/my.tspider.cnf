@@ -35,7 +35,7 @@ tmpdir=/data1/mysqldata/3306/tmp
 sql_mode=''
 
 spider_auto_increment_mode_switch=1
-spider_auto_increment_mode_value=1
+# spider_auto_increment_mode_value=1
 spider_auto_increment_step=37
 
 [mysql]

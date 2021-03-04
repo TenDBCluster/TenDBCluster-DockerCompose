@@ -100,7 +100,7 @@ services:
       - "/data/mysqldata/20003:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tspider-0:
-    image: tendbcluster/tspider:3.5-min-v0.1
+    image: tendbcluster/tspider:3.6.1-min-v0.1
     container_name: test-tspider-0
     networks:
       - mynet
@@ -109,6 +109,7 @@ services:
     command: 
       - --defaults-file=/etc/my.cnf
       - --user=mysql
+      - --spider_auto_increment_mode_value=0
     environment:
       - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
       - MYSQLDATADIR=/data1/mysqldata/3306
@@ -123,7 +124,7 @@ services:
       - "/data/mysqldata/25000:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tspider-1:
-    image: tendbcluster/tspider:3.5-min-v0.1
+    image: tendbcluster/tspider:3.6.1-min-v0.1
     container_name: test-tspider-1
     networks:
       - mynet
@@ -132,6 +133,7 @@ services:
     command: 
       - --defaults-file=/etc/my.cnf
       - --user=mysql
+      - --spider_auto_increment_mode_value=1
     environment:
       - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
       - MYSQLDATADIR=/data1/mysqldata/3306

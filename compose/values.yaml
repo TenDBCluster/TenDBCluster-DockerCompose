@@ -22,7 +22,7 @@ tendb:
   innodbBufferPoolSize: 256M
 
 tspider:
-  image: tendbcluster/tspider:3.5-min-v0.1
+  image: tendbcluster/tspider:3.6.1-min-v0.1
   size: 2
   portStart: 25000
   dataDir: /data/mysqldata

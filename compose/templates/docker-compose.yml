@@ -48,6 +48,7 @@ services:
     command: 
       - --defaults-file=/etc/my.cnf
       - --user=mysql
+      - --spider_auto_increment_mode_value={{ . }}
     environment:
       - MYSQL_INIT_COMPLETE=/data1/mysqldata/3306/mysql-initialized.lock
       - MYSQLDATADIR=/data1/mysqldata/3306
@@ -57,6 +58,7 @@ services:
       - MYSQL_OPERATOR_USER={{ $userOperator }}
       - MYSQL_OPERATOR_PASS={{ $userOperatorPass }}
       - MYSQL_OPERATOR_HOST={{ $userOperatorHost }}
+      - SPIDER_AUTO_INCREMENT_MODE_VALUE={{ . }}
     volumes:
       - "./config/my.tspider.cnf:/etc/my.cnf:ro"
       - "{{ $.Values.tspider.dataDir }}/{{ $mysqlPort }}:/data1/mysqldata/3306"
