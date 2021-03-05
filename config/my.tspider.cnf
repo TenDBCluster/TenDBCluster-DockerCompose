@@ -33,6 +33,9 @@ spider_get_sts_or_crd=1
 spider_index_hint_pushdown=1
 tmpdir=/data1/mysqldata/3306/tmp
 sql_mode=''
+max_allowed_packet=64M
+long_query_time=1
+log_sql_use_mutil_partition=ON
 
 spider_auto_increment_mode_switch=1
 # spider_auto_increment_mode_value=1
