@@ -15,19 +15,19 @@ userRoot:
     password: tendbclusterpass
 
 tendb:
-  image: tendbcluster/tendb:3.2-min-v0.1
+  image: tendbcluster/tendb:latest
   size: 4
   portStart: 20000
   dataDir: /data/mysqldata
   innodbBufferPoolSize: 256M
 
 tspider:
-  image: tendbcluster/tspider:3.6.1-min-v0.1
+  image: tendbcluster/tspider:latest
   size: 2
   portStart: 25000
   dataDir: /data/mysqldata
 
 tdbctl:
-  image: tendbcluster/tdbctl:1.4-min-v0.3
+  image: tendbcluster/tdbctl:latest
   port: 26000
   dataDir: /data/mysqldata
