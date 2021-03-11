@@ -4,7 +4,7 @@
 version: '3'
 services:
   test-tendb-spt0:
-    image: tendbcluster/tendb:3.2-min-v0.1
+    image: tendbcluster/tendb:latest
     container_name: test-tendb-spt0
     networks:
       - mynet
@@ -28,7 +28,7 @@ services:
       - "/data/mysqldata/20000:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tendb-spt1:
-    image: tendbcluster/tendb:3.2-min-v0.1
+    image: tendbcluster/tendb:latest
     container_name: test-tendb-spt1
     networks:
       - mynet
@@ -52,7 +52,7 @@ services:
       - "/data/mysqldata/20001:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tendb-spt2:
-    image: tendbcluster/tendb:3.2-min-v0.1
+    image: tendbcluster/tendb:latest
     container_name: test-tendb-spt2
     networks:
       - mynet
@@ -76,7 +76,7 @@ services:
       - "/data/mysqldata/20002:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tendb-spt3:
-    image: tendbcluster/tendb:3.2-min-v0.1
+    image: tendbcluster/tendb:latest
     container_name: test-tendb-spt3
     networks:
       - mynet
@@ -100,7 +100,7 @@ services:
       - "/data/mysqldata/20003:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tspider-0:
-    image: tendbcluster/tspider:3.6.1-min-v0.1
+    image: tendbcluster/tspider:latest
     container_name: test-tspider-0
     networks:
       - mynet
@@ -124,7 +124,7 @@ services:
       - "/data/mysqldata/25000:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tspider-1:
-    image: tendbcluster/tspider:3.6.1-min-v0.1
+    image: tendbcluster/tspider:latest
     container_name: test-tspider-1
     networks:
       - mynet
@@ -148,7 +148,7 @@ services:
       - "/data/mysqldata/25001:/data1/mysqldata/3306"
     restart: on-failure:3
   test-tdbctl-0:
-    image: tendbcluster/tdbctl:1.4-min-v0.3
+    image: tendbcluster/tdbctl:latest
     container_name: test-tdbctl-0
     networks:
       - mynet
